@@ -6,7 +6,7 @@ import json
 uapi = UnbabelApi('fullstack-challenge', '9db71b322d43a6ac0f681784ebdcc6409bb83359', sandbox=True)
 
 translation_page = Blueprint('translation_page', __name__,
-                        template_folder='templates', url_prefix='')
+                        template_folder='templates', url_prefix='',static_folder='static')
 
 @translation_page.route('/', methods=['GET','POST'])
 def index():

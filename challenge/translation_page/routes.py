@@ -2,7 +2,7 @@ from flask import request, render_template
 from . import translation_page
 from models import Translation
 from challenge import db, uapi
-from marshmallow import Schema, fields
+from marshmallow import Schema, fields, ValidationError
 from config import TRANSLATION_CALLBACK
 import json 
 
@@ -18,11 +18,12 @@ def index():
     
     elif request.method == 'POST':
         # payload validation
-        request_data=json.loads(request.data.decode())
+        request_data=request.get_json(force=True)
+      
         try:
             schema = RequestTranslationSchema()
             schema.load(request_data)
-        except:
+        except ValidationError as err:
             return 'Bad Request', 400
          
         # try to call unbabel api and add to the db 

@@ -3,7 +3,8 @@ let tableBody = document.getElementById(dataElementID);
 form = document.getElementById('translation-form')
 input = document.getElementById("text_to_translate")
 let socket;
-
+const socketConnectAdress = 'http://localhost:5000'
+const backendAddress = 'http://localhost:5000'
 
 function loadTableData(translationData){
     let dataHtml = '';
@@ -72,7 +73,7 @@ function getAllTranslations(){
         loadTableData(tableData);
         }
     }
-    getTranslationsRequest.open('GET', 'http://localhost:5000/translations/');
+    getTranslationsRequest.open('GET', `${backendAddress}/translations/`);
     getTranslationsRequest.responseType = 'text';
     getTranslationsRequest.send();
 }
@@ -100,14 +101,14 @@ form.addEventListener("submit", function(evt) {
     }
     
     }
-    getTranslationsRequest.open('POST', 'http://localhost:5000/');
+    getTranslationsRequest.open('POST', backendAddress);
     getTranslationsRequest.responseType = 'text';
     getTranslationsRequest.send(JSON.stringify(param));
 });
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    socket = io.connect('http://localhost:5000');
+    socket = io.connect(socketConnectAdress);
     console.log('Your socket is ready!');
 
 socket.on('after connect', function(msg){

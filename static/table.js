@@ -1,49 +1,63 @@
+let tableData;
+
+
 function loadTableData(translationData){
     let tableBody = document.getElementById('translationTableData');
     let dataHtml = '';
-    jsonResponse = JSON.parse(translationData)
-    for(let translation of jsonResponse.translations){
+    for(let translation of translationData){
         dataHtml += `<tr><td>${translation.uid}</td><td>${translation.state}</td><td>${translation.text_to_translate}</td><td>${translation.translation}</td></tr>`
     }
     tableBody.innerHTML = dataHtml;
 }
 
-function updateTranslationOnTable(uid,translation){
-    let UID = 0;
-    let STATE = 1;
-    let TEXT = 2;
-    let TRANSLATED_TEXT = 3;
-    let table = document.getElementById('translationTable');
-    let tableBody = document.getElementById('translationTableData');
 
-    for(let i=0, row; row=tableBody.rows[i];i++){
-        console.log('got here');
-        console.log(row.cells[UID].textContent);
-        console.log(uid);
-        if(row.cells[UID].textContent===uid){
-            row.cells[TRANSLATED_TEXT].innerHTML = `<td>${translation}<td>`;
-            row.cells[STATE].innerHTML = `<td>translated<td>`;
+function getTranslationByUID(uid) {
+    for(let translation of tableData){
+        if(translation.uid === uid){
+            return translation;
         }
     }
 }
+
+function updateTranslationOnTable(uid,translation){
+    let translationToUpdate = getTranslationByUID(uid);
+    translationToUpdate.translation = translation;
+    translationToUpdate.state = 'completed';
+    loadTableData(tableData);
+}
+
+function compare( a, b ) {
+    if ( a.translation.length > b.translation.length ){
+      return -1;
+    }
+    if ( a.translation.length < b.translation.length ){
+      return 1;
+    }
+    return 0;
+  }
+  
+
+function sortTable(tableData){
+    tableData = tableData.sort(compare);
+    loadTableData(tableData);
+}
+
 
 function insertTranslation(text){
     let tableBody = document.getElementById('translationTableData');
     let newRow = tableBody.insertRow();
     const rowGenerateId = ID();
-    newRow.id = rowGenerateId;
-    let newCell = newRow.insertCell(0);
-    let uid_text = document.createTextNode('None');
-    newCell.appendChild(uid_text);
-    newCell = newRow.insertCell(1);
-    let state = document.createTextNode('requested');
-    newCell.appendChild(state);
-    newCell = newRow.insertCell(2);
-    let textString = document.createTextNode(text);
-    newCell.appendChild(textString);
-    newCell = newRow.insertCell(3);
-    let text_translated = document.createTextNode('...');
-    newCell.appendChild(text_translated);
+    console.log(typeof(tableData))
+    tableData.push(
+        {
+            rowId:rowGenerateId,
+            uid: 'none',
+            text_to_translate: text,
+            translation: '',
+            state: 'requested'
+        }
+    )
+    loadTableData(tableData);
     return rowGenerateId;
 }
 
@@ -52,7 +66,9 @@ function getAllTranslations(){
     getTranslationsRequest.onreadystatechange = function(){
         if(getTranslationsRequest.readyState === XMLHttpRequest.DONE && getTranslationsRequest.status === 200) {
         console.log(getTranslationsRequest.response);
-        loadTableData(getTranslationsRequest.response);
+        let parsedResponse = JSON.parse(getTranslationsRequest.response);
+        tableData = parsedResponse.translations;
+        loadTableData(tableData);
         }
     }
     getTranslationsRequest.open('GET', 'http://localhost:5000/translations/');
@@ -67,17 +83,19 @@ form.addEventListener("submit", function(evt) {
     evt.preventDefault();
     param = {text_to_translate:input.value}
     const newRowId = insertTranslation(input.value);
-  
+    console.log(tableData);
     let getTranslationsRequest = new XMLHttpRequest();
     getTranslationsRequest.onreadystatechange = function(){ 
         if(getTranslationsRequest.readyState === XMLHttpRequest.DONE && getTranslationsRequest.status === 200) {
-
-        const row = document.getElementById(newRowId);
-        console.log(row);
-        response = JSON.parse(getTranslationsRequest.response);
-        console.log(response)
-        row.cells[0].innerHTML = `<td>${response['uid']}<td>`
-        row.cells[1].innerHTML = `<td>pending<td>`
+            response = JSON.parse(getTranslationsRequest.response);
+            const rowID = document.getElementById(newRowId);
+            for(let translation of tableData){
+                if(translation.rowId === newRowId){
+                    translation.uid = response.uid;
+                    translation.state = 'pending';
+            }
+        }
+     loadTableData(tableData);
     }
     
     }
@@ -98,6 +116,7 @@ socket.on('after connect', function(msg){
  socket.on('translation completed', function(msg){
     console.log('translation completed', msg);
     updateTranslationOnTable(msg.uid, msg.translation);
+    sortTable(tableData);
  });
 });
 
@@ -107,5 +126,10 @@ var ID = function () {
     // after the decimal.
     return '_' + Math.random().toString(36).substr(2, 9);
   };
+
+function sortColumn(columnName){
+    const dataType = typeof(columnName);
+    let sortDirection = !sortDirection;
+}
 
 document.onload = getAllTranslations();

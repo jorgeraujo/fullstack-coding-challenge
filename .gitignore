@@ -1,5 +1,6 @@
 translator/
 migrations/
+.vscode
 
 .DS_Store
 .env

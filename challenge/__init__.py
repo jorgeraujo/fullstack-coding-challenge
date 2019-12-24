@@ -5,6 +5,7 @@ from flask_marshmallow import Marshmallow
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from unbabel.api import UnbabelApi
+from config import UNBABEL_API_USERNAME, UNBABEL_API_KEY, SQLALCHEMY_DATABASE_URI
 import os
 
 
@@ -14,7 +15,7 @@ socketio = SocketIO()
 ma = Marshmallow()
 
 #initialize unbabel api 
-uapi = UnbabelApi('fullstack-challenge', '9db71b322d43a6ac0f681784ebdcc6409bb83359', sandbox=True)
+uapi = UnbabelApi(UNBABEL_API_USERNAME, UNBABEL_API_KEY, sandbox=True)
 
 
 def initialize_extensions(app):
@@ -36,7 +37,7 @@ def register_blueprints(app):
 # Application Factory Function
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI']= os.environ['DATABASE_URL']
+    app.config['SQLALCHEMY_DATABASE_URI']= SQLALCHEMY_DATABASE_URI
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     initialize_extensions(app)
     register_blueprints(app)

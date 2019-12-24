@@ -1,8 +1,11 @@
 let tableData;
+let tableBody = document.getElementById(dataElementID);
+form = document.getElementById('translation-form')
+input = document.getElementById("text_to_translate")
+let socket;
 
 
 function loadTableData(translationData){
-    let tableBody = document.getElementById('translationTableData');
     let dataHtml = '';
     for(let translation of translationData){
         dataHtml += `<tr><td>${translation.uid}</td><td>${translation.state}</td><td>${translation.text_to_translate}</td><td>${translation.translation}</td></tr>`
@@ -44,10 +47,8 @@ function sortTable(tableData){
 
 
 function insertTranslation(text){
-    let tableBody = document.getElementById('translationTableData');
     let newRow = tableBody.insertRow();
     const rowGenerateId = ID();
-    console.log(typeof(tableData))
     tableData.push(
         {
             rowId:rowGenerateId,
@@ -76,8 +77,7 @@ function getAllTranslations(){
     getTranslationsRequest.send();
 }
 
-form = document.getElementById('translation-form')
-input = document.getElementById("text_to_translate")
+
 
 form.addEventListener("submit", function(evt) {
     evt.preventDefault();
@@ -85,6 +85,7 @@ form.addEventListener("submit", function(evt) {
     const newRowId = insertTranslation(input.value);
     console.log(tableData);
     let getTranslationsRequest = new XMLHttpRequest();
+    getTranslationsRequest.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
     getTranslationsRequest.onreadystatechange = function(){ 
         if(getTranslationsRequest.readyState === XMLHttpRequest.DONE && getTranslationsRequest.status === 201) {
             response = JSON.parse(getTranslationsRequest.response);
@@ -104,7 +105,7 @@ form.addEventListener("submit", function(evt) {
     getTranslationsRequest.send(JSON.stringify(param));
 });
 
-var socket;
+
 document.addEventListener("DOMContentLoaded", function() {
     socket = io.connect('http://localhost:5000');
     console.log('Your socket is ready!');
@@ -120,10 +121,8 @@ socket.on('after connect', function(msg){
  });
 });
 
+
 var ID = function () {
-    // Math.random should be unique because of its seeding algorithm.
-    // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-    // after the decimal.
     return '_' + Math.random().toString(36).substr(2, 9);
   };
 

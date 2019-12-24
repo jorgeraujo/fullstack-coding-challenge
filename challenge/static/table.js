@@ -86,7 +86,7 @@ form.addEventListener("submit", function(evt) {
     console.log(tableData);
     let getTranslationsRequest = new XMLHttpRequest();
     getTranslationsRequest.onreadystatechange = function(){ 
-        if(getTranslationsRequest.readyState === XMLHttpRequest.DONE && getTranslationsRequest.status === 200) {
+        if(getTranslationsRequest.readyState === XMLHttpRequest.DONE && getTranslationsRequest.status === 201) {
             response = JSON.parse(getTranslationsRequest.response);
             const rowID = document.getElementById(newRowId);
             for(let translation of tableData){

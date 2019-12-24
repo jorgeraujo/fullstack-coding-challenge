@@ -1,7 +1,7 @@
 from sqlalchemy.dialects.postgresql import JSON
-from database import db
 from flask import Flask
-from marsh_mallow import ma
+from challenge import db, ma
+
 
 class Translation(db.Model):
     __tablename__='translations'
@@ -9,7 +9,7 @@ class Translation(db.Model):
     uid = db.Column(db.String(),primary_key=True)
     state = db.Column(db.String())
     text_to_translate = db.Column(db.String())
-    translation = db.Column(db.String(),default='...')
+    translation = db.Column(db.String(),default='')
 
     def __init__(self,text_to_translate, state, uid):
         self.text_to_translate = text_to_translate

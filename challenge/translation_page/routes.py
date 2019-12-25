@@ -1,9 +1,9 @@
 from flask import request, render_template
 from . import translation_page
-from models import Translation
+from challenge.models import Translation
 from challenge import db, uapi
 from marshmallow import Schema, fields, ValidationError
-from config import TRANSLATION_CALLBACK
+from challenge.config import TRANSLATION_CALLBACK
 import json 
 
 # schema for the post request 

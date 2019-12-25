@@ -1,4 +1,4 @@
-from models import Translation,translations_schema
+from challenge.models import Translation,translations_schema
 from flask import request, jsonify
 from . import translation_api
 from marshmallow import Schema, fields, ValidationError

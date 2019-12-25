@@ -21,6 +21,10 @@ function setTabledata(data) {
   tableData = data;
 }
 
+function getTableData(){
+    return tableData;
+}
+
 function getTranslationByUID(uid) {
     let translationToReturn;
   tableData.forEach(function(translation) {
@@ -32,9 +36,7 @@ function getTranslationByUID(uid) {
   return translationToReturn;
 }
 
-function getTableData(){
-    return tableData;
-}
+
 
 function updateTranslationOnTable(uid, translation) {
   let translationToUpdate = getTranslationByUID(uid);
@@ -58,6 +60,7 @@ function compare(a, b) {
 function sortTable(tableData) {
   tableData = tableData.sort(compare);
   loadTableData(tableData);
+  return tableData;
 }
 
 function insertTranslation(text) {
@@ -159,3 +162,4 @@ exports.tableData = tableData;
 exports.updateTranslationOnTable = updateTranslationOnTable;
 exports.setTabledata = setTabledata;
 exports.getTableData = getTableData;
+exports.sortTable =sortTable;

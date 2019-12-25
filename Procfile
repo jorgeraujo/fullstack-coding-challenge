@@ -1,1 +1,1 @@
-web: gunicorn --worker-class eventlet -w 1 challenge.main:app
+web: gunicorn --worker-class eventlet -w 1 challenge.main:app --error-logfile - --access-logfile - --log-level debug

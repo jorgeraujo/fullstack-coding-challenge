@@ -11,7 +11,7 @@ import os
 
 # Create instances of the extensions
 db = SQLAlchemy()
-socketio = SocketIO()
+socketio = SocketIO(engineio_logger=True)
 ma = Marshmallow()
 
 #initialize unbabel api 

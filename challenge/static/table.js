@@ -131,7 +131,7 @@ if (form != null) {
 document.addEventListener("DOMContentLoaded", function() {
   form = document.getElementById("translation-form");
   input = document.getElementById("text_to_translate");
-  socket = io.connect(socketConnectAdress);
+  socket = io.connect(socketConnectAdress, {transports: ['websocket']});
   console.log("Your socket is ready!");
 
   socket.on("after connect", function(msg) {

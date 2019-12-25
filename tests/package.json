@@ -3,12 +3,12 @@
   "version": "1.0.0",
   "description": "Tests for the JS frontend of the challenge app",
   "main": "index.js",
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "jest": "^24.9.0"
   },
-  "devDependencies": {},
   "scripts": {
-    "test": "test"
+    "test": "jest"
   },
   "author": "Jorge Araújo",
   "license": "ISC"

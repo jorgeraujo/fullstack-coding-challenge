@@ -1,4 +1,4 @@
-let tableData;
+let tableData = [];
 let tableBody = document.getElementById("translationTableData");
 let socket;
 let form = document.getElementById("translation-form");

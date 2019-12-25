@@ -64,7 +64,6 @@ function sortTable(tableData) {
 }
 
 function insertTranslation(text) {
-  let newRow = tableBody.insertRow();
   const rowGenerateId = ID();
   tableData.push({
     rowId: rowGenerateId,
@@ -163,3 +162,4 @@ exports.updateTranslationOnTable = updateTranslationOnTable;
 exports.setTabledata = setTabledata;
 exports.getTableData = getTableData;
 exports.sortTable =sortTable;
+exports.insertTranslation = insertTranslation;

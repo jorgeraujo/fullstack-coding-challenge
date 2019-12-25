@@ -81,4 +81,16 @@ const expectSorted =[{
   expect(table.sortTable(testData)).toEqual(expectSorted);
 });
 
+test("expect insert translation to add a new translation request", () => {
+  let testData = []
+  table.setTabledata(testData);
+  table.insertTranslation('a new translation request')
+  expect(table.getTableData()[0].text_to_translate).toEqual('a new translation request');
+  expect(table.getTableData()[0].state).toEqual('requested');
+  expect(table.getTableData()[0].uid).toEqual('none');
+  expect(table.getTableData()[0].rowId).toBeTruthy()
+
+
+});
+
 

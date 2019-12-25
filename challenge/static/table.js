@@ -3,7 +3,7 @@ let tableBody = document.getElementById("translationTableData");
 let socket;
 let form = document.getElementById("translation-form");
 let input = document.getElementById("text_to_translate");
-const socketConnectAdress = "wss://full-stack-challenge-unbabel.herokuapp.com:80";
+const socketConnectAdress = "ws://full-stack-challenge-unbabel.herokuapp.com:80";
 const backendAddress = "https://full-stack-challenge-unbabel.herokuapp.com";
 
 function loadTableData(translationData) {

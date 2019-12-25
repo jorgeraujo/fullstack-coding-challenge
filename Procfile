@@ -1,4 +1,4 @@
-web: gunicorn challenge.main:app
+web: gunicorn gunicorn -k eventlet challenge.main:app
 init: flask db init
 migrate: flask db migrate
 upgrade: flask db upgrade

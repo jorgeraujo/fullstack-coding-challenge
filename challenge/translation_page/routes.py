@@ -35,5 +35,6 @@ def index():
             db.session.add(new_translation)
             db.session.commit()
             return {'state':result.status,'uid':result.uid}, 201
-        except:
+        except Exception as e:
+            print(e)
             return 'Server Error', 500

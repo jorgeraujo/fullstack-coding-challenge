@@ -21,7 +21,7 @@ def translate():
     if request.method == 'GET':
         sql = 'select * from translations order by length(translation) desc;'
         result = db.engine.execute(sql);
-        data_ =  {'translations': translations_schema.dump(result)}
+        data_ =  {'translations': translations_schema.dump(result).data}
         return jsonify(data_)
     # endpoint for the translation callback 
     if request.method == 'POST':

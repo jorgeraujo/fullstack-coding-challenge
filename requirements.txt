@@ -19,7 +19,7 @@ itsdangerous==1.1.0
 Jinja2==2.10.3
 Mako==1.1.0
 MarkupSafe==1.1.1
-marshmallow==3.3.0
+marshmallow==3.0.0rc5
 marshmallow-sqlalchemy==0.21.0
 more-itertools==8.0.2
 packaging==19.2

@@ -1,0 +1,17 @@
+#text-box {
+    margin: 0 auto;
+    float: none;
+}
+
+.table-div {
+    max-height:600px;
+    overflow: auto;
+}
+
+.hidden-column{
+    display: none;
+}
+
+.container {
+    max-width: 1000px;
+  }

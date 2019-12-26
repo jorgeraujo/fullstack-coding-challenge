@@ -9,7 +9,7 @@ const backendAddress = "https://full-stack-challenge-unbabel.herokuapp.com";
 function loadTableData(translationData) {
   let dataHtml = "";
   translationData.forEach(function(translation) {
-    dataHtml += `<tr><td>${translation.uid}</td><td>${translation.state}</td><td>${translation.text_to_translate}</td><td>${translation.translation}</td></tr>`;
+    dataHtml += `<tr><td class='hidden-column' >${translation.uid}</td><td>${translation.state}</td><td>${translation.text_to_translate}</td><td>${translation.translation}</td></tr>`;
   });
   if (tableBody != null) {
     tableBody.innerHTML = dataHtml;

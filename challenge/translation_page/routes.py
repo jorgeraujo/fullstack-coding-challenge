@@ -8,7 +8,7 @@ import json
 
 # schema for the post request 
 class RequestTranslationSchema(Schema):
-    text_to_translate = fields.Str()
+    text_to_translate = fields.Str(required=True)
 
 @translation_page.route('/', methods=['GET','POST'])
 def index():
@@ -21,8 +21,8 @@ def index():
         request_data=request.get_json(force=True)
       
         try:
-            schema = RequestTranslationSchema()
-            schema.load(request_data)
+            schema = RequestTranslationSchema(strict=True)
+            result = schema.load(request_data)
         except ValidationError as err:
             return 'Bad Request', 400
          

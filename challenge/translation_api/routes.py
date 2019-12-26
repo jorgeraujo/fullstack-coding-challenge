@@ -5,15 +5,15 @@ from marshmallow import Schema, fields, ValidationError
 from challenge import db, socketio
 
 class ApiResponseSchema(Schema):
-    order_number = fields.Float()
-    price = fields.Float()
-    source_language = fields.Str()
-    status = fields.Str()
-    target_language = fields.Str()
-    text = fields.Str()
-    text_format = fields.Str() 
-    uid = fields.Str()
-    translated_text = fields.Str()
+    order_number = fields.Float(required=True)
+    price = fields.Float(required=True)
+    source_language = fields.Str(required=True)
+    status = fields.Str(required=True)
+    target_language = fields.Str(required=True)
+    text = fields.Str(required=True)
+    text_format = fields.Str(required=True) 
+    uid = fields.Str(required=True)
+    translated_text = fields.Str(required=True)
 
 
 @translation_api.route('/translations/', methods=['GET','POST'])
@@ -28,7 +28,7 @@ def translate():
         data = request.form.to_dict()
         # payload validation
         try:
-            validated = ApiResponseSchema().load(data)
+            validated = ApiResponseSchema(strict=True).load(data)
         except ValidationError as err:
             return 'Bad Request', 400
 

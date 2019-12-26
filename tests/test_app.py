@@ -6,9 +6,10 @@ import pytest
 from flask_testing import TestCase
 from models import Translation
 from flask_socketio import SocketIO, send, emit
-from unittest.mock import patch
+from mock import patch
 
 
+db.metadata.clear()
 class TestRenderTemplates(TestCase):
 
 
@@ -18,6 +19,7 @@ class TestRenderTemplates(TestCase):
         return app
 
     def setUp(self):
+  
         db.create_all()
 
     def tearDown(self):
@@ -74,12 +76,12 @@ class TestRenderTemplates(TestCase):
         db.session.add(new_translation)
         db.session.commit()
         bad_data = {'order_number':  3.2,
-                'price': 2.0,
-                'source_languageasd': 'en',
+                'pssssrice': 2.0,
+                'souasddasdrce_languageasd': 'en',
                 'text': 'test_text',
                 'text_format': 'text',
                 'uiasssd': 'fake_uid',
-                'translated_text': 'updated translation'}
+                'translaasdated_text': 'updated translation'}
         with patch.object(socketio, 'emit') as mock:
             response = self.client.post('/translations/', data=bad_data)
             print(response.data)
@@ -94,5 +96,6 @@ class TestRenderTemplates(TestCase):
 
     def test_add_new_translation_bad_request(self):
         new_translation = {'textranslate' : 'test_text'}
-        response = self.client.post('/', json=new_translation)
+        response = self.client.post('/', json=new_translation)  
+        print(response.data)
         self.assertEquals(response.status, '400 BAD REQUEST')

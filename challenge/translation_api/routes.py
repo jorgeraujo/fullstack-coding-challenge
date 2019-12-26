@@ -11,7 +11,7 @@ class ApiResponseSchema(Schema):
     status = fields.Str(required=True)
     target_language = fields.Str(required=True)
     text = fields.Str(required=True)
-    text_format = fields.Str(required=True) 
+    text_format = fields.Str() 
     uid = fields.Str(required=True)
     translated_text = fields.Str(required=True)
 
@@ -30,6 +30,7 @@ def translate():
         try:
             validated = ApiResponseSchema(strict=True).load(data)
         except ValidationError as err:
+            print(err)
             return 'Bad Request', 400
 
         try:

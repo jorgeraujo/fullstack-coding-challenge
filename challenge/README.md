@@ -65,6 +65,12 @@ npm install
 npm test
 ```
 
+## Deployed build
+
+I deployed a the app to heroku to make it easy to check out:
+[Link to the app](http://full-stack-challenge-unbabel.herokuapp.com) 
+
+
 ### Stack Used
 
 For the backend I just used Flask, Postgres and SQLAlchemy. For the frontend for the sake of simplicity I just used vanilla JS and bootstrap instead of a bulkier framework like React or Angular because the frontend looked simple enough for that.

@@ -5,8 +5,8 @@ from marshmallow import Schema, fields, ValidationError
 from challenge import db, socketio
 
 class ApiResponseSchema(Schema):
-    order_number = fields.Float(required=True)
-    price = fields.Float(required=True)
+    order_number = fields.Float()
+    price = fields.Float()
     source_language = fields.Str(required=True)
     status = fields.Str(required=True)
     target_language = fields.Str(required=True)

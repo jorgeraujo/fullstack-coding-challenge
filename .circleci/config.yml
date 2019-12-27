@@ -1,11 +1,13 @@
 version: 2
 
-environment:
-        PYTHONPATH: /root/myproject/:/root/myproject/folder_with_manage.py/:/root/myproject/folder_with_tests/
+
 jobs:
   build:
     docker:
       - image: circleci/python:2.6
+      environment:
+        PYTHONPATH: /root/myproject/:/root/myproject/folder_with_manage.py/:/root/myproject/folder_with_tests/
+        DATABASE_URL: postgresql://root@localhost/circle_test?sslmode=disable
     steps:
       - checkout
       - restore_cache:

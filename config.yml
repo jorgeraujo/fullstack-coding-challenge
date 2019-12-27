@@ -1,0 +1,32 @@
+version: 2
+
+environment:
+        PYTHONPATH: /root/myproject/:/root/myproject/folder_with_manage.py/:/root/myproject/folder_with_tests/
+jobs:
+  build:
+    docker:
+      - image: circleci/python:2.6
+    steps:
+      - checkout
+      - restore_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+      
+      - run: echo $PYTHONPATH 
+      - run:
+          command: |
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+      
+      - save_cache:
+          key: deps1-{{ .Branch }}-{{ checksum "requirements.txt" }}
+          paths:
+            - "venv"
+      - run:
+          name: Running tests
+          command: |
+            . venv/bin/activate
+            python -m pytest -vv 
+      - store_artifac tests.pyts:
+          path: test-reports/
+          destination: python_app
